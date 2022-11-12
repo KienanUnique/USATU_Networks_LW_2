@@ -6,7 +6,7 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{C793DAAB-A37D-44F8-899B-42E376230D2C}</ProjectGuid>
         <OutputType>WinExe</OutputType>
-        <RootNamespace>USATU_Networks_LW_2_Client</RootNamespace>
+        <RootNamespace>Client</RootNamespace>
         <AssemblyName>Client</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>

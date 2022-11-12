@@ -7,50 +7,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/LogsColors.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/MessageRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/NetworkTools.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/ClientMetadata.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/Common.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/ConnectionEventArgs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/DataReceivedEventArgs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/DataSentEventArgs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/DisconnectReason.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/LICENSE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpClientEvents.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpClientSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpKeepaliveSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpServer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpServerEvents.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpServerSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SimpleTcpStatistics.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/SuperSimpleTcp.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/assets/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/assets/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/FormServer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2.sln" beforeDir="false" afterPath="$PROJECT_DIR$/USATU_Networks_LW_2.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/Server/App.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/FormServer.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Form1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Properties/Resources.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Properties/Resources.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Properties/Settings.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Properties/Settings.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/Properties/Settings.settings" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Properties/Settings.settings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/USATU_Networks_LW_2.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USATU_Networks_LW_2/obj/Debug/USATU_Networks_LW_2.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Server/obj/Debug/USATU_Networks_LW_2.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/Microsoft.Bcl.AsyncInterfaces.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Buffers.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Buffers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Memory.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Memory.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Numerics.Vectors.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Numerics.Vectors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Runtime.CompilerServices.Unsafe.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Encodings.Web.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Encodings.Web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Threading.Tasks.Extensions.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Threading.Tasks.Extensions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.ValueTuple.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.ValueTuple.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CopyComplete" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/packages.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/App.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +82,11 @@
   }
 }</component>
   <component name="RunManager" selected="Compound.Server-Client">
+    <configuration name="Server-3-Clients" type="CompoundRunConfigurationType">
+      <toRun name="Client" type="DotNetProject" />
+      <toRun name="Server" type="DotNetProject" />
+      <method v="2" />
+    </configuration>
     <configuration name="Server-Client" type="CompoundRunConfigurationType">
       <toRun name="Client" type="DotNetProject" />
       <toRun name="Server" type="DotNetProject" />
@@ -131,6 +132,7 @@
       <item itemvalue=".NET Project.Client" />
       <item itemvalue=".NET Project.Server" />
       <item itemvalue="Compound.Server-Client" />
+      <item itemvalue="Compound.Server-3-Clients" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -143,7 +145,17 @@
       <updated>1667627867856</updated>
       <workItem from="1667627882965" duration="2820000" />
       <workItem from="1668210890197" duration="1137000" />
+      <workItem from="1668222973855" duration="96000" />
+      <workItem from="1668223339770" duration="3354000" />
     </task>
+    <task id="LOCAL-00001" summary="Add first version of lw">
+      <created>1668223044960</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668223044960</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,5 +176,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Add first version of lw" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add first version of lw" />
   </component>
 </project>

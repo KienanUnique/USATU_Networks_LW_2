@@ -81,8 +81,10 @@ namespace ChatLibrary
 
         private void OnDataFromClientReceived(object sender, DataReceivedEventArgs e)
         {
+            var decodedData = Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count);
+            SendMessageToAllClients(decodedData, e.IpPort);
             DataReceived?.Invoke(
-                new DecodedDataReceivedEventArgs(e.IpPort, Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count)));
+                new DecodedDataReceivedEventArgs(e.IpPort, decodedData));
         }
     }
 }
