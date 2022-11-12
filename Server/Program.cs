@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace USATU_Networks_LW_2
+namespace Server
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace USATU_Networks_LW_2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormServer());
         }
     }
 }

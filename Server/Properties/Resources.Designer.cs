@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace USATU_Networks_LW_2.Properties
+namespace Server.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -45,7 +45,7 @@ namespace USATU_Networks_LW_2.Properties
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp =
-                        new global::System.Resources.ResourceManager("USATU_Networks_LW_2.Properties.Resources",
+                        new global::System.Resources.ResourceManager("Server.Properties.Resources",
                             typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
