@@ -34,6 +34,7 @@ namespace Client
         private void OnDisconnected(ConnectionEventArgs e)
         {
             Log($"*** Server {e.IpPort} disconnected", LogsColors.SystemDisconnected);
+            _isConnected = false;
             SwitchToConnectionInterface();
         }
 

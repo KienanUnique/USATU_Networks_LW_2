@@ -41,6 +41,10 @@ namespace ChatLibrary
         public void StopServer()
         {
             _simpleTcpServer.Stop();
+            foreach (var client in _onlineClientsList)
+            {
+                _simpleTcpServer.DisconnectClient(client);
+            }
             _simpleTcpServer.Events.ClientConnected -= OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected -= OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;

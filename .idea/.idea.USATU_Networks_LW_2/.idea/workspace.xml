@@ -6,47 +6,10 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/Microsoft.Bcl.AsyncInterfaces.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Buffers.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Buffers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Memory.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Memory.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Numerics.Vectors.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Numerics.Vectors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Runtime.CompilerServices.Unsafe.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Encodings.Web.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Encodings.Web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Json.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Text.Json.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Threading.Tasks.Extensions.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.Threading.Tasks.Extensions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.ValueTuple.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/System.ValueTuple.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CopyComplete" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/packages.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Program.cs" afterDir="false" />
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Add missing files and refactor">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/FormClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +24,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/ChatLibrary/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Client/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Server/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -146,7 +110,7 @@
       <workItem from="1667627882965" duration="2820000" />
       <workItem from="1668210890197" duration="1137000" />
       <workItem from="1668222973855" duration="96000" />
-      <workItem from="1668223339770" duration="3354000" />
+      <workItem from="1668223339770" duration="4047000" />
     </task>
     <task id="LOCAL-00001" summary="Add first version of lw">
       <created>1668223044960</created>
@@ -155,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668223044960</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add missing files and refactor">
+      <created>1668246001218</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668246001218</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +148,26 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Add first version of lw" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add first version of lw" />
+    <MESSAGE value="Add missing files and refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add missing files and refactor" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Client/FormClient.cs</url>
+          <line>35</line>
+          <properties documentPath="C:\Users\wi\RiderProjects\USATU_Networks_LW_2\Client\FormClient.cs" initialLine="35" containingFunctionPresentation="method 'OnDisconnected'">
+            <startOffsets>
+              <option value="946" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1020" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

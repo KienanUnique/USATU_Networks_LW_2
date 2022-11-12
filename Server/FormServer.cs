@@ -32,7 +32,7 @@ namespace Server
 
         private void OnClientDisconnected(ConnectionEventArgs e)
         {
-            Log($"[{e.IpPort}] client disconnected: {e.Reason}", LogsColors.SystemDisconnected);
+            Log($"[{e.IpPort}] client disconnected", LogsColors.SystemDisconnected);
         }
 
         private void OnDataReceived(DecodedDataReceivedEventArgs e)
