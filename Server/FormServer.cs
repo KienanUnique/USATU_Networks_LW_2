@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using ChatLibrary;
 using SuperSimpleTcp;
@@ -22,7 +23,18 @@ namespace Server
         private void Log(string logText, Color selectedColor)
         {
             richTextBoxChat.SelectionColor = selectedColor;
-            richTextBoxChat.AppendText(Environment.NewLine + logText);
+            var messageStringBuilder = new StringBuilder();
+            messageStringBuilder.Append(Environment.NewLine);
+            messageStringBuilder.Append(DateTime.Now.ToString("HH:mm:ss"));
+            messageStringBuilder.Append(": ");
+            messageStringBuilder.Append(logText);
+
+            richTextBoxChat.AppendText(messageStringBuilder.ToString());
+        }
+        
+        private void OnLog(string logMessage)
+        {
+            Log(logMessage, Color.Black);
         }
 
         private void OnClientConnected(ConnectionEventArgs e)
@@ -34,11 +46,15 @@ namespace Server
         {
             Log($"[{e.IpPort}] client disconnected", LogsColors.SystemDisconnected);
         }
-
-        private void OnDataReceived(DecodedDataReceivedEventArgs e)
+        
+        private void OnClientAuthorize(AuthorizeEventArgs e)
         {
-            var messageRequest = NetworkTools.GetMessageRequestFromJson(e.Data);
-            Log($"[{messageRequest.Nick}]: {messageRequest.Message}", LogsColors.Message);
+            Log($"[{e.IpPort}] client authorized with nick: {e.Nick}", LogsColors.SystemConnected);
+        }
+
+        private void OnMessageReceived(MessageReceivedEventArgs e)
+        {
+            Log($"[{e.IpPort}] [{e.Nick}]: {e.Message}", LogsColors.Message);
         }
 
         private void richTextBoxChat_TextChanged(object sender, EventArgs e)
@@ -61,9 +77,11 @@ namespace Server
                 textBoxNick.Text != string.Empty)
             {
                 _server = new ChatServer(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text);
+                _server.LogThis += OnLog;
                 _server.ClientConnected += OnClientConnected;
                 _server.ClientDisconnected += OnClientDisconnected;
-                _server.DataReceived += OnDataReceived;
+                _server.MessageReceived += OnMessageReceived;
+                _server.ClientAuthorize += OnClientAuthorize;
                 _server.StartServer();
                 _isStarted = true;
                 panelConnection.Enabled = false;
@@ -75,7 +93,8 @@ namespace Server
                 _server.StopServer();
                 _server.ClientConnected -= OnClientConnected;
                 _server.ClientDisconnected -= OnClientDisconnected;
-                _server.DataReceived -= OnDataReceived;
+                _server.MessageReceived -= OnMessageReceived;
+                _server.ClientAuthorize -= OnClientAuthorize;
                 _isStarted = false;
                 panelConnection.Enabled = true;
                 panelChat.Enabled = false;

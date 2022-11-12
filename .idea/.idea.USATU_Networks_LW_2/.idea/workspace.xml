@@ -6,15 +6,22 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Fix server disconnection and refactor">
-      <change afterPath="$PROJECT_DIR$/Client/MultiFormContext.cs" afterDir="false" />
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/PocketTCP.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/AuthorizeEventArgs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/MessageReceivedEventArgs.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/MessageRequest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/NetworkTools.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/NetworkTools.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/FormClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/FormServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/FormServer.cs" afterDir="false" />
@@ -34,6 +41,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/898512ddb9b74303996c5d2e8d378f73364548/83/862503b5/NetworkStream.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatLibrary/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Client/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Server/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
@@ -120,7 +128,8 @@
       <workItem from="1667627882965" duration="2820000" />
       <workItem from="1668210890197" duration="1137000" />
       <workItem from="1668222973855" duration="96000" />
-      <workItem from="1668223339770" duration="5669000" />
+      <workItem from="1668223339770" duration="11520000" />
+      <workItem from="1668268854089" duration="13685000" />
     </task>
     <task id="LOCAL-00001" summary="Add first version of lw">
       <created>1668223044960</created>
@@ -143,7 +152,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668246833858</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix server messages forward and add MultiFormContext">
+      <created>1668248434886</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668248434886</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add missing files">
+      <created>1668248499863</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668248499863</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +190,8 @@
     <MESSAGE value="Add first version of lw" />
     <MESSAGE value="Add missing files and refactor" />
     <MESSAGE value="Fix server disconnection and refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix server disconnection and refactor" />
+    <MESSAGE value="Fix server messages forward and add MultiFormContext" />
+    <MESSAGE value="Add missing files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add missing files" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using ChatLibrary;
 using SuperSimpleTcp;
@@ -23,7 +24,18 @@ namespace Client
         private void Log(string logText, Color selectedColor)
         {
             richTextBoxChat.SelectionColor = selectedColor;
-            richTextBoxChat.AppendText(Environment.NewLine + logText);
+            var messageStringBuilder = new StringBuilder();
+            messageStringBuilder.Append(Environment.NewLine);
+            messageStringBuilder.Append(DateTime.Now.ToString("HH:mm:ss"));
+            messageStringBuilder.Append(": ");
+            messageStringBuilder.Append(logText);
+
+            richTextBoxChat.AppendText(messageStringBuilder.ToString());
+        }
+
+        private void OnLog(string logMessage)
+        {
+            Log(logMessage, Color.Black);
         }
 
         private void OnConnected(ConnectionEventArgs e)
@@ -37,11 +49,20 @@ namespace Client
             _isConnected = false;
             SwitchToConnectionInterface();
         }
-
-        private void OnDataReceived(DecodedDataReceivedEventArgs e)
+        
+        private void OnAnotherClientAuthorize(AuthorizeEventArgs e)
         {
-            var messageRequest = NetworkTools.GetMessageRequestFromJson(e.Data);
-            Log($"[{messageRequest.Nick}]: {messageRequest.Message}", LogsColors.Message);
+            Log($"[{e.IpPort}] [{e.Nick}]: connected", LogsColors.SystemConnected);
+        }
+
+        private void OnAnotherClientDisconnected(ConnectionEventArgs e)
+        {
+            Log($"[{e.IpPort}]: disconnected", LogsColors.SystemDisconnected);
+        }
+
+        private void OnMessageReceived(MessageReceivedEventArgs e)
+        {
+            Log($"[{e.IpPort}] [{e.Nick}]: {e.Message}", LogsColors.Message);
         }
 
         private void SendMessageAndEmptyTextBoxMessage()
@@ -67,19 +88,24 @@ namespace Client
 
         private void SwitchToChatInterface()
         {
+            _client.LogThis += OnLog;
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
-            _client.DataReceived += OnDataReceived;
+            _client.MessageReceived += OnMessageReceived;
+            _client.AnotherClientAuthorize += OnAnotherClientAuthorize;
+            _client.AnotherClientDisconnected += OnAnotherClientDisconnected;
             panelConnection.Enabled = false;
             panelChat.Enabled = true;
             buttonConnectionStatusChange.Text = ButtonDisconnectText;
         }
-        
+
         private void SwitchToConnectionInterface()
         {
             _client.Connected -= OnConnected;
             _client.Disconnected -= OnDisconnected;
-            _client.DataReceived -= OnDataReceived;
+            _client.MessageReceived -= OnMessageReceived;
+            _client.AnotherClientAuthorize -= OnAnotherClientAuthorize;
+            _client.AnotherClientDisconnected -= OnAnotherClientDisconnected;
             panelConnection.Enabled = true;
             panelChat.Enabled = false;
             buttonConnectionStatusChange.Text = ButtonConnectText;

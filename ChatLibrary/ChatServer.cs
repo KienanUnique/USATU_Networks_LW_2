@@ -7,25 +7,39 @@ namespace ChatLibrary
 {
     public class ChatServer
     {
+        public delegate void LogHandler(string e);
+
+        public event LogHandler LogThis;
+
         public delegate void ClientConnectedHandler(ConnectionEventArgs e);
 
         public event ClientConnectedHandler ClientConnected;
+
+        public delegate void ClientAuthorizedHandler(AuthorizeEventArgs e);
+
+        public event ClientAuthorizedHandler ClientAuthorize;
 
         public delegate void ClientDisconnectedHandler(ConnectionEventArgs e);
 
         public event ClientDisconnectedHandler ClientDisconnected;
 
-        public delegate void DataReceivedHandler(DecodedDataReceivedEventArgs e);
+        public delegate void MessageReceivedHandler(MessageReceivedEventArgs e);
 
-        public event DataReceivedHandler DataReceived;
+        public event MessageReceivedHandler MessageReceived;
+
+        private struct Client
+        {
+            public string Nick { get; }
+            public string IpPort { get; }
+        }
 
         private readonly SimpleTcpServer _simpleTcpServer;
-        private readonly string _nick;
-        private readonly List<string> _onlineClientsList = new();
+        private readonly SenderInfo _thisSenderInfo;
+        private readonly List<SenderInfo> _onlineClientsList = new();
 
         public ChatServer(string ipPort, string nick)
         {
-            _nick = nick;
+            _thisSenderInfo = new SenderInfo(nick, ipPort);
             _simpleTcpServer = new SimpleTcpServer(ipPort);
 
             _simpleTcpServer.Events.ClientConnected += OnClientConnected;
@@ -43,59 +57,112 @@ namespace ChatLibrary
             _simpleTcpServer.Stop();
             foreach (var client in _onlineClientsList)
             {
-                _simpleTcpServer.DisconnectClient(client);
+                _simpleTcpServer.DisconnectClient(client.IpPort);
             }
+
             _simpleTcpServer.Events.ClientConnected -= OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected -= OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
         }
-        
-        
-        private void SendMessageToClient(string client, string message)
+
+        private void SendPocketToAllClients(PocketTCP pocketTcp)
         {
-            _simpleTcpServer.Send(client, NetworkTools.GetStringJsonSendMessage(new MessageRequest(_nick, message)));
-        }
-        
-        private void SendClientMessageToAnotherClient(string client, string message, string nickFromClient)
-        {
-            _simpleTcpServer.Send(client, NetworkTools.GetStringJsonSendMessage(new MessageRequest(nickFromClient, message)));
-        }
-        
-        public void SendMessageToAllClients(string message)
-        {
+            string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
             foreach (var client in _onlineClientsList)
             {
-                SendMessageToClient(client, message);
+                _simpleTcpServer.Send(client.IpPort, pocketTcpString);
             }
         }
 
-        private void SendClientMessageToAllOtherClients(string message, string fromClientIpPort, string fromClientNick)
+        private void SendClientPocketToAnotherClients(PocketTCP pocketTcp)
         {
-            foreach (var client in _onlineClientsList.Where(client => client != fromClientIpPort))
+            string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
+            foreach (var client in _onlineClientsList.Where(client => client.IpPort != pocketTcp.SenderIpPort))
             {
-                SendClientMessageToAnotherClient(client, message, fromClientNick);
+                _simpleTcpServer.Send(client.IpPort, pocketTcpString);
+            }
+        }
+
+        private void SendClientAuthorizeToAnotherClients(SenderInfo connectedClient)
+        {
+            var pocket = new PocketTCP(connectedClient.Nick, connectedClient.IpPort, RequestsTypes.Authorize);
+            SendClientPocketToAnotherClients(pocket);
+        }
+
+        private void SendClientDisconnectionToAnotherClient(SenderInfo disconnectedClient)
+        {
+            var pocket = new PocketTCP(disconnectedClient.Nick, disconnectedClient.IpPort, RequestsTypes.Disconnection);
+            SendClientPocketToAnotherClients(pocket);
+        }
+
+        public void SendMessageToAllClients(string message)
+        {
+            var pocket = new PocketTCP(_thisSenderInfo.Nick, _thisSenderInfo.IpPort, RequestsTypes.Message, message);
+            SendPocketToAllClients(pocket);
+        }
+
+        private void ProcessReceivedPocket(PocketTCP receivedPocket)
+        {
+            var senderInfo = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
+            switch (receivedPocket.RequestType)
+            {
+                case RequestsTypes.Authorize:
+                    _onlineClientsList.Add(senderInfo);
+                    SendClientAuthorizeToAnotherClients(senderInfo);
+                    ClientAuthorize?.Invoke(new AuthorizeEventArgs(senderInfo.IpPort, senderInfo.Nick));
+                    break;
+
+                case RequestsTypes.Disconnection:
+                    if (_onlineClientsList.Contains(senderInfo))
+                    {
+                        try
+                        {
+                            _simpleTcpServer.DisconnectClient(senderInfo.IpPort);
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+
+                        _onlineClientsList.Remove(senderInfo);
+                        SendClientDisconnectionToAnotherClient(senderInfo);
+                        ClientDisconnected?.Invoke(new ConnectionEventArgs(senderInfo.IpPort, DisconnectReason.Normal));
+                    }
+
+                    break;
+
+                case RequestsTypes.Message:
+                    if (_onlineClientsList.Contains(senderInfo))
+                    {
+                        SendClientPocketToAnotherClients(receivedPocket);
+                        MessageReceived?.Invoke(new MessageReceivedEventArgs(senderInfo.IpPort,
+                            senderInfo.Nick, receivedPocket.Message));
+                    }
+
+                    break;
             }
         }
 
         private void OnClientConnected(object sender, ConnectionEventArgs e)
         {
-            _onlineClientsList.Add(e.IpPort);
             ClientConnected?.Invoke(e);
         }
 
         private void OnClientDisconnected(object sender, ConnectionEventArgs e)
         {
-            _onlineClientsList.Remove(e.IpPort);
+            if (_onlineClientsList.Exists(i => i.IpPort == e.IpPort))
+            {
+                _onlineClientsList.Remove(_onlineClientsList.Find(i => i.IpPort == e.IpPort));
+            }
+
             ClientDisconnected?.Invoke(e);
         }
 
         private void OnDataFromClientReceived(object sender, DataReceivedEventArgs e)
         {
             var decodedData = Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count);
-            var messageRequest = NetworkTools.GetMessageRequestFromJson(decodedData);
-            SendClientMessageToAllOtherClients(messageRequest.Message, e.IpPort, messageRequest.Nick);
-            DataReceived?.Invoke(
-                new DecodedDataReceivedEventArgs(e.IpPort, decodedData));
+            var pocketTcp = NetworkTools.GetPocketTcpFromJson(decodedData);
+            ProcessReceivedPocket(pocketTcp);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace Client
 {
     static class Program
     {
+        private const int CountOfClientsFormsToOpen = 3;
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -14,7 +16,12 @@ namespace Client
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FormClient());
-            Application.Run(new MultiFormContext(new FormClient(), new FormClient(), new FormClient()));
+            var forms = new Form[CountOfClientsFormsToOpen];
+            for (int i = 0; i < CountOfClientsFormsToOpen; i++)
+            {
+                forms[i] = new FormClient();
+            }
+            Application.Run(new MultiFormContext(forms));
         }
     }
 }

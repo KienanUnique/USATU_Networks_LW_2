@@ -5,14 +5,14 @@ namespace ChatLibrary;
 
 public static class NetworkTools
 {
-    public static string GetStringJsonSendMessage(MessageRequest messageRequest)
+    public static string GetStringJsonSendMessage(PocketTCP pocketTcp)
     {
-        return JsonSerializer.Serialize(messageRequest);
+        return JsonSerializer.Serialize(pocketTcp);
     }
 
-    public static MessageRequest GetMessageRequestFromJson(string json)
+    public static PocketTCP GetPocketTcpFromJson(string json)
     {
-        return JsonSerializer.Deserialize<MessageRequest>(json);
+        return new PocketTCP(JsonSerializer.Deserialize<ParsedPocketTCP>(json));
     }
     public static bool IsAddressAndPortCorrect(string ipAddressToCheck, string portToCheck)
     {
