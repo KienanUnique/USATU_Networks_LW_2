@@ -13,7 +13,8 @@ namespace Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormClient());
+            //Application.Run(new FormClient());
+            Application.Run(new MultiFormContext(new FormClient(), new FormClient(), new FormClient()));
         }
     }
 }

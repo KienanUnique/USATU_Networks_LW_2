@@ -41,7 +41,7 @@ namespace Client
         private void OnDataReceived(DecodedDataReceivedEventArgs e)
         {
             var messageRequest = NetworkTools.GetMessageRequestFromJson(e.Data);
-            Log($"[{e.IpPort}][{messageRequest.Nick}]: {messageRequest.Message}", LogsColors.Message);
+            Log($"[{messageRequest.Nick}]: {messageRequest.Message}", LogsColors.Message);
         }
 
         private void SendMessageAndEmptyTextBoxMessage()

@@ -52,6 +52,7 @@
         <Compile Include="FormClient.Designer.cs">
             <DependentUpon>FormClient.cs</DependentUpon>
         </Compile>
+        <Compile Include="MultiFormContext.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <EmbeddedResource Include="FormClient.resx">

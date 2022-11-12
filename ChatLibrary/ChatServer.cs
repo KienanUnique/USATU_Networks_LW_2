@@ -50,6 +50,17 @@ namespace ChatLibrary
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
         }
         
+        
+        private void SendMessageToClient(string client, string message)
+        {
+            _simpleTcpServer.Send(client, NetworkTools.GetStringJsonSendMessage(new MessageRequest(_nick, message)));
+        }
+        
+        private void SendClientMessageToAnotherClient(string client, string message, string nickFromClient)
+        {
+            _simpleTcpServer.Send(client, NetworkTools.GetStringJsonSendMessage(new MessageRequest(nickFromClient, message)));
+        }
+        
         public void SendMessageToAllClients(string message)
         {
             foreach (var client in _onlineClientsList)
@@ -58,17 +69,12 @@ namespace ChatLibrary
             }
         }
 
-        public void SendMessageToAllClients(string message, string clientExceptionIpPort)
+        private void SendClientMessageToAllOtherClients(string message, string fromClientIpPort, string fromClientNick)
         {
-            foreach (var client in _onlineClientsList.Where(client => client != clientExceptionIpPort))
+            foreach (var client in _onlineClientsList.Where(client => client != fromClientIpPort))
             {
-                SendMessageToClient(client, message);
+                SendClientMessageToAnotherClient(client, message, fromClientNick);
             }
-        }
-
-        private void SendMessageToClient(string client, string message)
-        {
-            _simpleTcpServer.Send(client, NetworkTools.GetStringJsonSendMessage(new MessageRequest(_nick, message)));
         }
 
         private void OnClientConnected(object sender, ConnectionEventArgs e)
@@ -86,7 +92,8 @@ namespace ChatLibrary
         private void OnDataFromClientReceived(object sender, DataReceivedEventArgs e)
         {
             var decodedData = Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count);
-            SendMessageToAllClients(decodedData, e.IpPort);
+            var messageRequest = NetworkTools.GetMessageRequestFromJson(decodedData);
+            SendClientMessageToAllOtherClients(messageRequest.Message, e.IpPort, messageRequest.Nick);
             DataReceived?.Invoke(
                 new DecodedDataReceivedEventArgs(e.IpPort, decodedData));
         }
