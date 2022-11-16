@@ -21,11 +21,11 @@ namespace ChatLibrary
 
         public event MessageReceivedHandler MessageReceived;
 
-        public delegate void AnotherClientAuthorizedHandler(AuthorizeEventArgs e);
+        public delegate void AnotherClientAuthorizedHandler(UserEventArgs e);
 
         public event AnotherClientAuthorizedHandler AnotherClientAuthorize;
 
-        public delegate void AnotherClientDisconnectedHandler(ConnectionEventArgs e);
+        public delegate void AnotherClientDisconnectedHandler(UserEventArgs e);
 
         public event AnotherClientDisconnectedHandler AnotherClientDisconnected;
 
@@ -90,13 +90,13 @@ namespace ChatLibrary
             switch (receivedPocket.RequestType)
             {
                 case RequestsTypes.Authorize:
-                    AnotherClientAuthorize?.Invoke(new AuthorizeEventArgs(receivedPocket.SenderIpPort,
+                    AnotherClientAuthorize?.Invoke(new UserEventArgs(receivedPocket.SenderIpPort,
                         receivedPocket.SenderNick));
                     break;
 
                 case RequestsTypes.Disconnection:
-                    AnotherClientDisconnected?.Invoke(new ConnectionEventArgs(receivedPocket.SenderIpPort,
-                        DisconnectReason.Normal));
+                    AnotherClientDisconnected?.Invoke(new UserEventArgs(receivedPocket.SenderIpPort,
+                        receivedPocket.SenderNick));
                     break;
 
                 case RequestsTypes.Message:

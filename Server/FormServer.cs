@@ -24,10 +24,10 @@ namespace Server
         {
             richTextBoxChat.SelectionColor = selectedColor;
             var messageStringBuilder = new StringBuilder();
-            messageStringBuilder.Append(Environment.NewLine);
             messageStringBuilder.Append(DateTime.Now.ToString("HH:mm:ss"));
             messageStringBuilder.Append(": ");
             messageStringBuilder.Append(logText);
+            messageStringBuilder.Append(Environment.NewLine);
 
             richTextBoxChat.AppendText(messageStringBuilder.ToString());
         }
@@ -42,12 +42,12 @@ namespace Server
             Log($"[{e.IpPort}] client connected", LogsColors.SystemConnected);
         }
 
-        private void OnClientDisconnected(ConnectionEventArgs e)
+        private void OnClientDisconnected(UserEventArgs e)
         {
-            Log($"[{e.IpPort}] client disconnected", LogsColors.SystemDisconnected);
+            Log($"[{e.IpPort}] [{e.Nick}]: disconnected", LogsColors.SystemDisconnected);
         }
         
-        private void OnClientAuthorize(AuthorizeEventArgs e)
+        private void OnClientAuthorize(UserEventArgs e)
         {
             Log($"[{e.IpPort}] client authorized with nick: {e.Nick}", LogsColors.SystemConnected);
         }

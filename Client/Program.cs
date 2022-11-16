@@ -5,7 +5,7 @@ namespace Client
 {
     static class Program
     {
-        private const int CountOfClientsFormsToOpen = 3;
+        private const int CountOfClientsFormsToOpen = 2;
         
         /// <summary>
         /// The main entry point for the application.

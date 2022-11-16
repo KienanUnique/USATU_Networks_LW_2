@@ -2,12 +2,12 @@
 
 namespace SuperSimpleTcp;
 
-public class AuthorizeEventArgs : EventArgs
+public class UserEventArgs : EventArgs
 {
     /// <summary>
     /// Arguments for authorize events.
     /// </summary>
-    internal AuthorizeEventArgs(string ipPort, string nick)
+    internal UserEventArgs(string ipPort, string nick)
     {
         IpPort = ipPort;
         Nick = nick;

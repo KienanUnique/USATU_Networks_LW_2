@@ -15,11 +15,11 @@ namespace ChatLibrary
 
         public event ClientConnectedHandler ClientConnected;
 
-        public delegate void ClientAuthorizedHandler(AuthorizeEventArgs e);
+        public delegate void ClientAuthorizedHandler(UserEventArgs e);
 
         public event ClientAuthorizedHandler ClientAuthorize;
 
-        public delegate void ClientDisconnectedHandler(ConnectionEventArgs e);
+        public delegate void ClientDisconnectedHandler(UserEventArgs e);
 
         public event ClientDisconnectedHandler ClientDisconnected;
 
@@ -109,7 +109,7 @@ namespace ChatLibrary
                 case RequestsTypes.Authorize:
                     _onlineClientsList.Add(senderInfo);
                     SendClientAuthorizeToAnotherClients(senderInfo);
-                    ClientAuthorize?.Invoke(new AuthorizeEventArgs(senderInfo.IpPort, senderInfo.Nick));
+                    ClientAuthorize?.Invoke(new UserEventArgs(senderInfo.IpPort, senderInfo.Nick));
                     break;
 
                 case RequestsTypes.Disconnection:
@@ -126,7 +126,7 @@ namespace ChatLibrary
 
                         _onlineClientsList.Remove(senderInfo);
                         SendClientDisconnectionToAnotherClient(senderInfo);
-                        ClientDisconnected?.Invoke(new ConnectionEventArgs(senderInfo.IpPort, DisconnectReason.Normal));
+                        ClientDisconnected?.Invoke(new UserEventArgs(senderInfo.IpPort, senderInfo.Nick));
                     }
 
                     break;
@@ -150,12 +150,13 @@ namespace ChatLibrary
 
         private void OnClientDisconnected(object sender, ConnectionEventArgs e)
         {
+            ;
             if (_onlineClientsList.Exists(i => i.IpPort == e.IpPort))
             {
-                _onlineClientsList.Remove(_onlineClientsList.Find(i => i.IpPort == e.IpPort));
+                var foundedClient = _onlineClientsList.Find(i => i.IpPort == e.IpPort);
+                _onlineClientsList.Remove(foundedClient);
+                ClientDisconnected?.Invoke(new UserEventArgs(foundedClient.IpPort, foundedClient.Nick));
             }
-
-            ClientDisconnected?.Invoke(e);
         }
 
         private void OnDataFromClientReceived(object sender, DataReceivedEventArgs e)
