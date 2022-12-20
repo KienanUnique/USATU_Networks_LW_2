@@ -30,6 +30,7 @@ namespace ChatLibrary
         private readonly SimpleTcpServer _simpleTcpServer;
         private readonly SenderInfo _thisSenderInfo;
         private readonly List<SenderInfo> _onlineClientsList = new();
+        private readonly ClientsDataBaseWithFileStorage _clientsDataBase = new();
 
         public ChatServer(string ipPort, string nick)
         {
@@ -57,6 +58,12 @@ namespace ChatLibrary
             _simpleTcpServer.Events.ClientConnected -= OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected -= OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
+        }
+
+        public void SendMessageToAllClients(string message)
+        {
+            var pocket = new PocketTCP(_thisSenderInfo.Nick, _thisSenderInfo.IpPort, RequestsTypes.Message, message);
+            SendPocketToAllClients(pocket);
         }
 
         private async void SendPocket(string ipPort, string pocketTcp)
@@ -92,12 +99,6 @@ namespace ChatLibrary
         {
             var pocket = new PocketTCP(disconnectedClient.Nick, disconnectedClient.IpPort, RequestsTypes.Disconnection);
             SendClientPocketToAnotherClients(pocket);
-        }
-
-        public void SendMessageToAllClients(string message)
-        {
-            var pocket = new PocketTCP(_thisSenderInfo.Nick, _thisSenderInfo.IpPort, RequestsTypes.Message, message);
-            SendPocketToAllClients(pocket);
         }
 
         private void ProcessReceivedPocket(PocketTCP receivedPocket)

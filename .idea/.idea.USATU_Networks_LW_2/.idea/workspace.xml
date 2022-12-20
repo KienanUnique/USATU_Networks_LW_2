@@ -6,14 +6,11 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="">
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Make pockets sending async">
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +34,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2H7EkvNnbDdYsFyqZLp6sAb8Y0Z" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -119,7 +118,7 @@
       <workItem from="1668268854089" duration="14169000" />
       <workItem from="1668589665794" duration="1777000" />
       <workItem from="1671112627793" duration="3217000" />
-      <workItem from="1671519589274" duration="742000" />
+      <workItem from="1671519589274" duration="5369000" />
     </task>
     <task id="LOCAL-00001" summary="Add first version of lw">
       <created>1668223044960</created>
@@ -170,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668590939812</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Make pockets sending async">
+      <created>1671521213163</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671521213163</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +204,7 @@
     <MESSAGE value="Add missing files" />
     <MESSAGE value="Add Request types, refactor and etc" />
     <MESSAGE value="Add nicks to disconnection message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add nicks to disconnection message" />
+    <MESSAGE value="Make pockets sending async" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make pockets sending async" />
   </component>
 </project>
