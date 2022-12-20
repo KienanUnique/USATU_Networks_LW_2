@@ -59,9 +59,9 @@ namespace ChatLibrary
             _simpleTcpClient.Events.DataReceived -= OnDataReceived;
         }
 
-        private void SendPocket(PocketTCP pocketTcp)
+        private async void SendPocket(PocketTCP pocketTcp)
         {
-            _simpleTcpClient.Send(NetworkTools.GetStringJsonSendMessage(pocketTcp));
+            await _simpleTcpClient.SendAsync(NetworkTools.GetStringJsonSendMessage(pocketTcp));
         }
 
         public void SendAuthorizeRequest()

@@ -27,12 +27,6 @@ namespace ChatLibrary
 
         public event MessageReceivedHandler MessageReceived;
 
-        private struct Client
-        {
-            public string Nick { get; }
-            public string IpPort { get; }
-        }
-
         private readonly SimpleTcpServer _simpleTcpServer;
         private readonly SenderInfo _thisSenderInfo;
         private readonly List<SenderInfo> _onlineClientsList = new();
@@ -65,12 +59,17 @@ namespace ChatLibrary
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
         }
 
+        private async void SendPocket(string ipPort, string pocketTcp)
+        {
+            await _simpleTcpServer.SendAsync(ipPort, pocketTcp);
+        }
+
         private void SendPocketToAllClients(PocketTCP pocketTcp)
         {
             string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
             foreach (var client in _onlineClientsList)
             {
-                _simpleTcpServer.Send(client.IpPort, pocketTcpString);
+                SendPocket(client.IpPort, pocketTcpString);
             }
         }
 
@@ -79,7 +78,7 @@ namespace ChatLibrary
             string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
             foreach (var client in _onlineClientsList.Where(client => client.IpPort != pocketTcp.SenderIpPort))
             {
-                _simpleTcpServer.Send(client.IpPort, pocketTcpString);
+                SendPocket(client.IpPort, pocketTcpString);
             }
         }
 
@@ -150,7 +149,6 @@ namespace ChatLibrary
 
         private void OnClientDisconnected(object sender, ConnectionEventArgs e)
         {
-            ;
             if (_onlineClientsList.Exists(i => i.IpPort == e.IpPort))
             {
                 var foundedClient = _onlineClientsList.Find(i => i.IpPort == e.IpPort);
