@@ -6,14 +6,11 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="">
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Make pockets sending async">
+      <change afterPath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +20,10 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="custom-async-socket" />
+        <entry key="$PROJECT_DIR$" value="8593a9369e9f777e95b4212185689210a0530d13" />
       </map>
     </option>
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/898512ddb9b74303996c5d2e8d378f73364548/83/862503b5/NetworkStream.cs" root0="SKIP_HIGHLIGHTING" />
@@ -37,7 +35,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2H7EkvNnbDdYsFyqZLp6sAb8Y0Z" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

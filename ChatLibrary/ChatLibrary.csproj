@@ -71,6 +71,7 @@
     <ItemGroup>
         <Compile Include="ChatClient.cs" />
         <Compile Include="ChatServer.cs" />
+        <Compile Include="ClientsDataBase.cs" />
         <Compile Include="LogsColors.cs" />
         <Compile Include="NetworkTools.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
