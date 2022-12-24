@@ -23,6 +23,10 @@ namespace ChatLibrary
 
         public event DisconnectedHandler Disconnected;
 
+        public delegate void ServerIsUnreachableHandler(ConnectionEventArgs e);
+
+        public event ServerIsUnreachableHandler ServerIsUnreachable;
+
         public delegate void MessageReceivedHandler(MessageReceivedEventArgs e);
 
         public event MessageReceivedHandler MessageReceived;
@@ -38,12 +42,12 @@ namespace ChatLibrary
 
         private const int ConnectionTimeoutMs = 10000;
 
-        private readonly SimpleTcpClient _simpleTcpClient;
-        private readonly string _localNick;
-        private readonly string _localPassword;
-        private readonly bool _needSignUp;
+        private SimpleTcpClient _simpleTcpClient;
+        private string _localNick;
+        private string _localPassword;
+        private bool _needSignUp;
 
-        public ChatClient(string ipPort, string nick, string localPassword, bool needSignUp)
+        public void TryAuthorize(string ipPort, string nick, string localPassword, bool needSignUp)
         {
             _localNick = nick;
             _localPassword = localPassword;
@@ -53,11 +57,7 @@ namespace ChatLibrary
             _simpleTcpClient.Events.Connected += OnConnected;
             _simpleTcpClient.Events.Disconnected += OnDisconnected;
             _simpleTcpClient.Events.DataReceived += OnDataReceived;
-        }
-
-        public void Connect()
-        {
-            _simpleTcpClient.ConnectWithRetries(ConnectionTimeoutMs);
+            Connect();
         }
 
         public void Disconnect()
@@ -68,27 +68,39 @@ namespace ChatLibrary
             _simpleTcpClient.Events.Disconnected -= OnDisconnected;
             _simpleTcpClient.Events.DataReceived -= OnDataReceived;
         }
+        
+        private void Connect()
+        {
+            try
+            {
+                _simpleTcpClient.ConnectWithRetries(ConnectionTimeoutMs);
+            }
+            catch (Exception)
+            {
+                ServerIsUnreachable?.Invoke(new ConnectionEventArgs(_simpleTcpClient.ServerIpPort));
+            }
+        }
 
         private async void SendPocket(PocketTCP pocketTcp)
         {
             await _simpleTcpClient.SendAsync(NetworkTools.GetStringJsonSendMessage(pocketTcp));
         }
 
-        public void SendLogInRequest()
+        private void SendLogInRequest()
         {
             var pocketTcp = new PocketTCP(_localNick, _simpleTcpClient.LocalEndpoint.ToString(),
                 RequestsTypes.LogIn, _localPassword);
             SendPocket(pocketTcp);
         }
 
-        public void SendSignUpRequest()
+        private void SendSignUpRequest()
         {
             var pocketTcp = new PocketTCP(_localNick, _simpleTcpClient.LocalEndpoint.ToString(),
                 RequestsTypes.SignUp, _localPassword);
             SendPocket(pocketTcp);
         }
 
-        public void SendDisconnectionRequest()
+        private void SendDisconnectionRequest()
         {
             var pocketTcp = new PocketTCP(_localNick, _simpleTcpClient.LocalEndpoint.ToString(),
                 RequestsTypes.Disconnection);

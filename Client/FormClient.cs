@@ -10,13 +10,20 @@ namespace Client
 {
     public partial class FormClient : Form
     {
-        private ChatClient _client;
+        private readonly ChatClient _client = new();
         private bool _isAuthorized = false;
         private const bool NeedLogs = true;
 
         public FormClient()
         {
             InitializeComponent();
+            _client.ReadyToUse += OnReadyToUse;
+            _client.AuthenticationError += OnAuthenticationError;
+            _client.ServerIsUnreachable += OnServerUnreachable;
+            if (NeedLogs)
+            {
+                _client.LogThis += OnLog;
+            }
 
             SwitchToConnectionInterface();
         }
@@ -52,6 +59,11 @@ namespace Client
             Log(
                 $"*** Server {e.IpPort} rejected authentication: {Enum.GetName(typeof(AnswerOnAuthenticationTypes), e.AuthenticationError)}",
                 LogsColors.SystemConnected);
+        }
+
+        private void OnServerUnreachable(ConnectionEventArgs e)
+        {
+            Log($"*** Server {e.IpPort} is unreachable", LogsColors.Message);
         }
 
         private void OnDisconnected(ConnectionEventArgs e)
@@ -132,16 +144,8 @@ namespace Client
         {
             if (_isAuthorized || !NetworkTools.IsAddressAndPortCorrect(textBoxIP.Text, textBoxPort.Text) ||
                 textBoxNick.Text == string.Empty || textBoxPassword.Text == string.Empty) return;
-            _client = new ChatClient(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text, textBoxPassword.Text,
+            _client.TryAuthorize(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text, textBoxPassword.Text,
                 needSignUp);
-            if (NeedLogs)
-            {
-                _client.LogThis += OnLog;
-            }
-
-            _client.ReadyToUse += OnReadyToUse;
-            _client.AuthenticationError += OnAuthenticationError;
-            _client.Connect();
         }
 
         private void buttonLogIn_Click(object sender, EventArgs e)
