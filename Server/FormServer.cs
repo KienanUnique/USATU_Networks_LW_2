@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using ChatLibrary;
 using SuperSimpleTcp;
-
+// TODO: add writeClientsData
 namespace Server
 {
     public partial class FormServer : Form
@@ -31,7 +31,7 @@ namespace Server
 
             richTextBoxChat.AppendText(messageStringBuilder.ToString());
         }
-        
+
         private void OnLog(string logMessage)
         {
             Log(logMessage, Color.Black);
@@ -46,7 +46,7 @@ namespace Server
         {
             Log($"[{e.IpPort}] [{e.Nick}]: disconnected", LogsColors.SystemDisconnected);
         }
-        
+
         private void OnClientAuthorize(UserEventArgs e)
         {
             Log($"[{e.IpPort}] client authorized with nick: {e.Nick}", LogsColors.SystemConnected);
@@ -91,6 +91,7 @@ namespace Server
             else if (_isStarted)
             {
                 _server.StopServer();
+                _server.LogThis -= OnLog;
                 _server.ClientConnected -= OnClientConnected;
                 _server.ClientDisconnected -= OnClientDisconnected;
                 _server.MessageReceived -= OnMessageReceived;

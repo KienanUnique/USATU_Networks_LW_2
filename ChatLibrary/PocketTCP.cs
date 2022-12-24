@@ -5,8 +5,17 @@ namespace ChatLibrary;
 public enum RequestsTypes
 {
     Message,
-    Authorize,
+    LogIn,
+    SignUp,
+    NewUserAuthorize,
+    AnswerOnAuthentication,
     Disconnection
+}
+
+public enum AnswerOnAuthenticationTypes // TODO: Add different auth answers
+{
+    Ok,
+    NotOk
 }
 
 public class SenderInfo

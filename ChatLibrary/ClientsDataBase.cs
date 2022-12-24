@@ -21,26 +21,27 @@ public class ClientDoesntExistException : Exception
 
 public class ClientsDataBase
 {
-    protected Dictionary<string, string> _loginsAndPasswords = new();
+    protected Dictionary<string, string> LoginsAndPasswords = new();
 
-    public void SignInNewUser(string login, string password)
+    public bool IsClientWithSuchLoginExist(string login)
     {
-        if (_loginsAndPasswords.ContainsKey(login))
-        {
-            throw new ClientAlreadyExistException(login);
-        }
-
-        _loginsAndPasswords.Add(login, password);
+        return LoginsAndPasswords.ContainsKey(login);
     }
 
-    public bool IsClientsPasswordCorrect(string login, string password)
+    public bool TryAddUser(string login, string password)
     {
-        if (!_loginsAndPasswords.ContainsKey(login))
+        if (IsClientWithSuchLoginExist(login))
         {
-            throw new ClientDoesntExistException(login);
+            return false;
         }
 
-        return _loginsAndPasswords[login] == password;
+        LoginsAndPasswords.Add(login, password);
+        return true;
+    }
+
+    public bool IsClientsPasswordCorrect(string login, string password) //TODO: make Try
+    {
+        return IsClientWithSuchLoginExist(login) && LoginsAndPasswords[login] == password;
     }
 }
 
@@ -48,20 +49,16 @@ public class ClientsDataBaseWithFileStorage : ClientsDataBase
 {
     private const string FileName = "ClientsData.txt";
 
-    public bool IsFileExists()
-    {
-        return File.Exists(FileName);
-    }
-
     public void ReadClientsData()
     {
+        if (!File.Exists(FileName)) return;
         var readText = File.ReadAllText(FileName);
-        _loginsAndPasswords = JsonSerializer.Deserialize<Dictionary<string, string>>(readText);
+        LoginsAndPasswords = JsonSerializer.Deserialize<Dictionary<string, string>>(readText);
     }
 
     public void WriteClientsData()
     {
-        var threeNumbersString = JsonSerializer.Serialize(_loginsAndPasswords) + Environment.NewLine;
+        var threeNumbersString = JsonSerializer.Serialize(LoginsAndPasswords) + Environment.NewLine;
         File.WriteAllText(FileName, threeNumbersString);
     }
 }

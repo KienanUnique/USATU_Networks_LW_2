@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using SuperSimpleTcp;
+using DataReceivedEventArgs = SuperSimpleTcp.DataReceivedEventArgs;
 
 namespace ChatLibrary
 {
@@ -29,7 +30,8 @@ namespace ChatLibrary
 
         private readonly SimpleTcpServer _simpleTcpServer;
         private readonly SenderInfo _thisSenderInfo;
-        private readonly List<SenderInfo> _onlineClientsList = new();
+        private readonly List<SenderInfo> _loggedInClientsIpList = new();
+        private readonly ClientsDataBaseWithFileStorage _clientsDataBaseWithFileStorage = new();
 
         public ChatServer(string ipPort, string nick)
         {
@@ -39,6 +41,8 @@ namespace ChatLibrary
             _simpleTcpServer.Events.ClientConnected += OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected += OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived += OnDataFromClientReceived;
+
+            _clientsDataBaseWithFileStorage.ReadClientsData();
         }
 
         public void StartServer()
@@ -49,7 +53,7 @@ namespace ChatLibrary
         public void StopServer()
         {
             _simpleTcpServer.Stop();
-            foreach (var client in _onlineClientsList)
+            foreach (var client in _loggedInClientsIpList)
             {
                 _simpleTcpServer.DisconnectClient(client.IpPort);
             }
@@ -59,15 +63,22 @@ namespace ChatLibrary
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
         }
 
+        private void SendPocket(string ipPort, PocketTCP pocketTcp)
+        {
+            string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
+            SendPocket(ipPort, pocketTcpString);
+        }
+
         private async void SendPocket(string ipPort, string pocketTcp)
         {
+            LogThis?.Invoke(pocketTcp);
             await _simpleTcpServer.SendAsync(ipPort, pocketTcp);
         }
 
         private void SendPocketToAllClients(PocketTCP pocketTcp)
         {
             string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
-            foreach (var client in _onlineClientsList)
+            foreach (var client in _loggedInClientsIpList)
             {
                 SendPocket(client.IpPort, pocketTcpString);
             }
@@ -76,7 +87,7 @@ namespace ChatLibrary
         private void SendClientPocketToAnotherClients(PocketTCP pocketTcp)
         {
             string pocketTcpString = NetworkTools.GetStringJsonSendMessage(pocketTcp);
-            foreach (var client in _onlineClientsList.Where(client => client.IpPort != pocketTcp.SenderIpPort))
+            foreach (var client in _loggedInClientsIpList.Where(client => client.IpPort != pocketTcp.SenderIpPort))
             {
                 SendPocket(client.IpPort, pocketTcpString);
             }
@@ -84,7 +95,7 @@ namespace ChatLibrary
 
         private void SendClientAuthorizeToAnotherClients(SenderInfo connectedClient)
         {
-            var pocket = new PocketTCP(connectedClient.Nick, connectedClient.IpPort, RequestsTypes.Authorize);
+            var pocket = new PocketTCP(connectedClient.Nick, connectedClient.IpPort, RequestsTypes.NewUserAuthorize);
             SendClientPocketToAnotherClients(pocket);
         }
 
@@ -102,42 +113,22 @@ namespace ChatLibrary
 
         private void ProcessReceivedPocket(PocketTCP receivedPocket)
         {
-            var senderInfo = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
-            switch (receivedPocket.RequestType)
+            switch (receivedPocket.RequestType) // TODO: Make requests classes with polymorphism and requests factory 
             {
-                case RequestsTypes.Authorize:
-                    _onlineClientsList.Add(senderInfo);
-                    SendClientAuthorizeToAnotherClients(senderInfo);
-                    ClientAuthorize?.Invoke(new UserEventArgs(senderInfo.IpPort, senderInfo.Nick));
+                case RequestsTypes.SignUp:
+                    ProcessUserSignUp(receivedPocket);
+                    break;
+
+                case RequestsTypes.LogIn:
+                    ProcessUserLogIn(receivedPocket);
                     break;
 
                 case RequestsTypes.Disconnection:
-                    if (_onlineClientsList.Contains(senderInfo))
-                    {
-                        try
-                        {
-                            _simpleTcpServer.DisconnectClient(senderInfo.IpPort);
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
-
-                        _onlineClientsList.Remove(senderInfo);
-                        SendClientDisconnectionToAnotherClient(senderInfo);
-                        ClientDisconnected?.Invoke(new UserEventArgs(senderInfo.IpPort, senderInfo.Nick));
-                    }
-
+                    ProcessUserDisconnection(receivedPocket);
                     break;
 
                 case RequestsTypes.Message:
-                    if (_onlineClientsList.Contains(senderInfo))
-                    {
-                        SendClientPocketToAnotherClients(receivedPocket);
-                        MessageReceived?.Invoke(new MessageReceivedEventArgs(senderInfo.IpPort,
-                            senderInfo.Nick, receivedPocket.Message));
-                    }
-
+                    ProcessUserMessage(receivedPocket);
                     break;
             }
         }
@@ -149,10 +140,10 @@ namespace ChatLibrary
 
         private void OnClientDisconnected(object sender, ConnectionEventArgs e)
         {
-            if (_onlineClientsList.Exists(i => i.IpPort == e.IpPort))
+            if (_loggedInClientsIpList.Exists(i => i.IpPort == e.IpPort))
             {
-                var foundedClient = _onlineClientsList.Find(i => i.IpPort == e.IpPort);
-                _onlineClientsList.Remove(foundedClient);
+                var foundedClient = _loggedInClientsIpList.Find(i => i.IpPort == e.IpPort);
+                _loggedInClientsIpList.Remove(foundedClient);
                 ClientDisconnected?.Invoke(new UserEventArgs(foundedClient.IpPort, foundedClient.Nick));
             }
         }
@@ -160,8 +151,78 @@ namespace ChatLibrary
         private void OnDataFromClientReceived(object sender, DataReceivedEventArgs e)
         {
             var decodedData = Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count);
+            LogThis?.Invoke(decodedData);
             var pocketTcp = NetworkTools.GetPocketTcpFromJson(decodedData);
             ProcessReceivedPocket(pocketTcp);
+        }
+
+        private void ProcessUserLogIn(PocketTCP receivedPocket)
+        {
+            bool isLogInSuccess = _clientsDataBaseWithFileStorage.IsClientsPasswordCorrect(receivedPocket.SenderNick,
+                receivedPocket.Message);
+            if (isLogInSuccess)
+            {
+                var loggedInUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
+                _loggedInClientsIpList.Add(loggedInUser);
+                SendClientAuthorizeToAnotherClients(loggedInUser);
+                ClientAuthorize?.Invoke(new UserEventArgs(loggedInUser.IpPort, loggedInUser.Nick));
+            }
+
+            SendPocket(receivedPocket.SenderIpPort,
+                PrepareAnswerOnAuthenticationRequest(isLogInSuccess));
+        }
+
+        private void ProcessUserSignUp(PocketTCP receivedPocket)
+        {
+            bool addResult =
+                _clientsDataBaseWithFileStorage.TryAddUser(receivedPocket.SenderNick, receivedPocket.Message);
+            if (addResult)
+            {
+                var signedUpUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
+                _loggedInClientsIpList.Add(signedUpUser);
+                SendClientAuthorizeToAnotherClients(signedUpUser);
+                ClientAuthorize?.Invoke(new UserEventArgs(signedUpUser.IpPort, signedUpUser.Nick));
+            }
+
+            SendPocket(receivedPocket.SenderIpPort,
+                PrepareAnswerOnAuthenticationRequest(addResult));
+        }
+
+        private PocketTCP PrepareAnswerOnAuthenticationRequest(bool isOk)
+        {
+            return new PocketTCP(_thisSenderInfo.Nick, _thisSenderInfo.IpPort, RequestsTypes.AnswerOnAuthentication,
+                (isOk ? AnswerOnAuthenticationTypes.Ok : AnswerOnAuthenticationTypes.NotOk).ToString());
+        }
+
+        private void ProcessUserDisconnection(PocketTCP disconnectedUserInfo)
+        {
+            var disconnectedUser = new SenderInfo(disconnectedUserInfo.SenderNick, disconnectedUserInfo.SenderIpPort);
+            if (_loggedInClientsIpList.Contains(disconnectedUser))
+            {
+                try
+                {
+                    _simpleTcpServer.DisconnectClient(disconnectedUserInfo.SenderIpPort);
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                _loggedInClientsIpList.Remove(disconnectedUser);
+                SendClientDisconnectionToAnotherClient(disconnectedUser);
+                ClientDisconnected?.Invoke(new UserEventArgs(disconnectedUser.IpPort, disconnectedUser.Nick));
+            }
+        }
+
+        private void ProcessUserMessage(PocketTCP receivedPocket)
+        {
+            if (_loggedInClientsIpList.Exists(user =>
+                    user.Nick == receivedPocket.SenderNick && user.IpPort == receivedPocket.SenderIpPort))
+            {
+                SendClientPocketToAnotherClients(receivedPocket);
+                MessageReceived?.Invoke(new MessageReceivedEventArgs(receivedPocket.SenderIpPort,
+                    receivedPocket.SenderNick, receivedPocket.Message));
+            }
         }
     }
 }

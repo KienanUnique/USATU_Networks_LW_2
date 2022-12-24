@@ -11,14 +11,13 @@ namespace Client
     public partial class FormClient : Form
     {
         private ChatClient _client;
-        private bool _isConnected = false;
-
-        private const string ButtonConnectText = "Connect";
-        private const string ButtonDisconnectText = "Disconnect";
+        private bool _isAuthorized = false;
 
         public FormClient()
         {
             InitializeComponent();
+
+            SwitchToConnectionInterface();
         }
 
         private void Log(string logText, Color selectedColor)
@@ -38,18 +37,28 @@ namespace Client
             Log(logMessage, Color.Black);
         }
 
-        private void OnConnected(ConnectionEventArgs e)
+        private void OnReadyToUse(ConnectionEventArgs e)
         {
+            SubscribeClientChatEvents();
+            SwitchToChatInterface();
+            _isAuthorized = true;
             Log($"*** Server {e.IpPort} connected", LogsColors.SystemConnected);
+        }
+
+        private void OnAuthenticationError(ConnectionEventArgs e)
+        {
+            _isAuthorized = false;
+            Log($"*** Server {e.IpPort} rejected authentication", LogsColors.SystemConnected);
         }
 
         private void OnDisconnected(ConnectionEventArgs e)
         {
             Log($"*** Server {e.IpPort} disconnected", LogsColors.SystemDisconnected);
-            _isConnected = false;
+            _isAuthorized = false;
+            UnsubscribeClientChatEvents();
             SwitchToConnectionInterface();
         }
-        
+
         private void OnAnotherClientAuthorize(UserEventArgs e)
         {
             Log($"[{e.IpPort}] [{e.Nick}]: connected", LogsColors.SystemConnected);
@@ -88,51 +97,69 @@ namespace Client
 
         private void SwitchToChatInterface()
         {
-            _client.LogThis += OnLog;
-            _client.Connected += OnConnected;
-            _client.Disconnected += OnDisconnected;
-            _client.MessageReceived += OnMessageReceived;
-            _client.AnotherClientAuthorize += OnAnotherClientAuthorize;
-            _client.AnotherClientDisconnected += OnAnotherClientDisconnected;
             panelConnection.Enabled = false;
+            buttonDisconnect.Enabled = true;
             panelChat.Enabled = true;
-            buttonConnectionStatusChange.Text = ButtonDisconnectText;
         }
 
         private void SwitchToConnectionInterface()
         {
-            _client.Connected -= OnConnected;
+            panelConnection.Enabled = true;
+            buttonDisconnect.Enabled = false;
+            panelChat.Enabled = false;
+        }
+
+        private void UnsubscribeClientChatEvents()
+        {
             _client.Disconnected -= OnDisconnected;
             _client.MessageReceived -= OnMessageReceived;
             _client.AnotherClientAuthorize -= OnAnotherClientAuthorize;
             _client.AnotherClientDisconnected -= OnAnotherClientDisconnected;
-            panelConnection.Enabled = true;
-            panelChat.Enabled = false;
-            buttonConnectionStatusChange.Text = ButtonConnectText;
         }
 
-        private void buttonConnectionStatusChange_MouseClick(object sender, MouseEventArgs e)
+        private void SubscribeClientChatEvents()
         {
-            if (!_isConnected && NetworkTools.IsAddressAndPortCorrect(textBoxIP.Text, textBoxPort.Text) &&
-                textBoxNick.Text != string.Empty)
-            {
-                _client = new ChatClient(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text);
-                SwitchToChatInterface();
-                _client.Connect();
-                _isConnected = true;
-            }
-            else if (_isConnected)
-            {
-                _client.Disconnect();
-                SwitchToConnectionInterface();
-                _isConnected = false;
-            }
+            _client.Disconnected += OnDisconnected;
+            _client.MessageReceived += OnMessageReceived;
+            _client.AnotherClientAuthorize += OnAnotherClientAuthorize;
+            _client.AnotherClientDisconnected += OnAnotherClientDisconnected;
+        }
+
+        private void TryAuthorize(bool needSignUp)
+        {
+            if (_isAuthorized || !NetworkTools.IsAddressAndPortCorrect(textBoxIP.Text, textBoxPort.Text) ||
+                textBoxNick.Text == string.Empty || textBoxPassword.Text == string.Empty) return;
+            _client = new ChatClient(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text, textBoxPassword.Text,
+                needSignUp);
+            _client.LogThis += OnLog;
+            _client.ReadyToUse += OnReadyToUse;
+            _client.AuthenticationError += OnAuthenticationError;
+            _client.Connect();
+        }
+
+        private void buttonLogIn_Click(object sender, EventArgs e)
+        {
+            TryAuthorize(false);
+        }
+
+        private void buttonSignUp_MouseClick(object sender, MouseEventArgs e)
+        {
+            TryAuthorize(true);
         }
 
         private void richTextBoxChat_TextChanged(object sender, EventArgs e)
         {
             richTextBoxChat.SelectionStart = richTextBoxChat.Text.Length;
             richTextBoxChat.ScrollToCaret();
+        }
+
+        private void buttonDisconnect_Click(object sender, EventArgs e)
+        {
+            if (!_isAuthorized) return;
+            _client.Disconnect();
+            UnsubscribeClientChatEvents();
+            SwitchToConnectionInterface();
+            _isAuthorized = false;
         }
     }
 }

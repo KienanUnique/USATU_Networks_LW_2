@@ -127,14 +127,14 @@
             this.panelChat.Enabled = false;
             this.panelChat.Location = new System.Drawing.Point(12, 57);
             this.panelChat.Name = "panelChat";
-            this.panelChat.Size = new System.Drawing.Size(760, 390);
+            this.panelChat.Size = new System.Drawing.Size(765, 399);
             this.panelChat.TabIndex = 5;
             // 
             // textBoxMessageInput
             // 
             this.textBoxMessageInput.Location = new System.Drawing.Point(6, 367);
             this.textBoxMessageInput.Name = "textBoxMessageInput";
-            this.textBoxMessageInput.Size = new System.Drawing.Size(670, 20);
+            this.textBoxMessageInput.Size = new System.Drawing.Size(671, 20);
             this.textBoxMessageInput.TabIndex = 1;
             this.textBoxMessageInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxMessageInput_KeyDown);
             // 
@@ -152,7 +152,7 @@
             // 
             this.buttonSendMessage.Location = new System.Drawing.Point(682, 367);
             this.buttonSendMessage.Name = "buttonSendMessage";
-            this.buttonSendMessage.Size = new System.Drawing.Size(75, 23);
+            this.buttonSendMessage.Size = new System.Drawing.Size(75, 20);
             this.buttonSendMessage.TabIndex = 2;
             this.buttonSendMessage.Text = "Send";
             this.buttonSendMessage.UseVisualStyleBackColor = true;
@@ -162,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 461);
+            this.ClientSize = new System.Drawing.Size(793, 461);
             this.Controls.Add(this.buttonServerStatusChange);
             this.Controls.Add(this.panelConnection);
             this.Controls.Add(this.panelChat);

@@ -1,17 +1,23 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using SuperSimpleTcp;
 
 namespace ChatLibrary
 {
-    public class ChatClient
+    public class ChatClient // TODO: the same interface for ChatClient and ChatServer?  
     {
         public delegate void LogHandler(string e);
 
         public event LogHandler LogThis;
 
-        public delegate void ConnectedHandler(ConnectionEventArgs e);
+        public delegate void ReadyToUseHandler(ConnectionEventArgs e);
 
-        public event ConnectedHandler Connected;
+        public event ReadyToUseHandler ReadyToUse;
+
+        public delegate void
+            AuthenticationErrorHandler(ConnectionEventArgs e); // TODO: make custom arguments for handler
+
+        public event AuthenticationErrorHandler AuthenticationError;
 
         public delegate void DisconnectedHandler(ConnectionEventArgs e);
 
@@ -34,10 +40,14 @@ namespace ChatLibrary
 
         private readonly SimpleTcpClient _simpleTcpClient;
         private readonly string _localNick;
+        private readonly string _localPassword;
+        private readonly bool _needSignUp;
 
-        public ChatClient(string ipPort, string nick)
+        public ChatClient(string ipPort, string nick, string localPassword, bool needSignUp)
         {
             _localNick = nick;
+            _localPassword = localPassword;
+            _needSignUp = needSignUp;
             _simpleTcpClient = new SimpleTcpClient(ipPort);
 
             _simpleTcpClient.Events.Connected += OnConnected;
@@ -64,10 +74,17 @@ namespace ChatLibrary
             await _simpleTcpClient.SendAsync(NetworkTools.GetStringJsonSendMessage(pocketTcp));
         }
 
-        public void SendAuthorizeRequest()
+        public void SendLogInRequest()
         {
             var pocketTcp = new PocketTCP(_localNick, _simpleTcpClient.LocalEndpoint.ToString(),
-                RequestsTypes.Authorize);
+                RequestsTypes.LogIn, _localPassword);
+            SendPocket(pocketTcp);
+        }
+
+        public void SendSignUpRequest()
+        {
+            var pocketTcp = new PocketTCP(_localNick, _simpleTcpClient.LocalEndpoint.ToString(),
+                RequestsTypes.SignUp, _localPassword);
             SendPocket(pocketTcp);
         }
 
@@ -89,9 +106,21 @@ namespace ChatLibrary
         {
             switch (receivedPocket.RequestType)
             {
-                case RequestsTypes.Authorize:
+                case RequestsTypes.NewUserAuthorize:
                     AnotherClientAuthorize?.Invoke(new UserEventArgs(receivedPocket.SenderIpPort,
                         receivedPocket.SenderNick));
+                    break;
+                case RequestsTypes.AnswerOnAuthentication:
+                    Enum.TryParse(receivedPocket.Message, out AnswerOnAuthenticationTypes answerOnAuthentication);
+                    switch (answerOnAuthentication)
+                    {
+                        case AnswerOnAuthenticationTypes.Ok:
+                            ReadyToUse?.Invoke(new ConnectionEventArgs(receivedPocket.SenderIpPort));
+                            break;
+                        case AnswerOnAuthenticationTypes.NotOk:
+                            AuthenticationError?.Invoke(new ConnectionEventArgs(receivedPocket.SenderIpPort));
+                            break;
+                    }
                     break;
 
                 case RequestsTypes.Disconnection:
@@ -108,8 +137,14 @@ namespace ChatLibrary
 
         private void OnConnected(object sender, ConnectionEventArgs e)
         {
-            SendAuthorizeRequest();
-            Connected?.Invoke(e);
+            if (_needSignUp)
+            {
+                SendSignUpRequest();
+            }
+            else
+            {
+                SendLogInRequest();
+            }
         }
 
         private void OnDisconnected(object sender, ConnectionEventArgs e)
@@ -120,6 +155,7 @@ namespace ChatLibrary
         private void OnDataReceived(object sender, DataReceivedEventArgs e)
         {
             var decodedData = Encoding.UTF8.GetString(e.Data.Array, 0, e.Data.Count);
+            LogThis?.Invoke(decodedData);
             var pocketTcp = NetworkTools.GetPocketTcpFromJson(decodedData);
             ProcessReceivedPocket(pocketTcp);
         }
