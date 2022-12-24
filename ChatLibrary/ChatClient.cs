@@ -15,7 +15,7 @@ namespace ChatLibrary
         public event ReadyToUseHandler ReadyToUse;
 
         public delegate void
-            AuthenticationErrorHandler(ConnectionEventArgs e); // TODO: make custom arguments for handler
+            AuthenticationErrorHandler(AuthenticationErrorEventArgs e); // TODO: make custom arguments for handler
 
         public event AuthenticationErrorHandler AuthenticationError;
 
@@ -117,10 +117,12 @@ namespace ChatLibrary
                         case AnswerOnAuthenticationTypes.Ok:
                             ReadyToUse?.Invoke(new ConnectionEventArgs(receivedPocket.SenderIpPort));
                             break;
-                        case AnswerOnAuthenticationTypes.NotOk:
-                            AuthenticationError?.Invoke(new ConnectionEventArgs(receivedPocket.SenderIpPort));
+                        default:
+                            AuthenticationError?.Invoke(new AuthenticationErrorEventArgs(receivedPocket.SenderIpPort,
+                                answerOnAuthentication));
                             break;
                     }
+
                     break;
 
                 case RequestsTypes.Disconnection:

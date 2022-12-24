@@ -28,18 +28,17 @@ public class ClientsDataBase
         return LoginsAndPasswords.ContainsKey(login);
     }
 
-    public bool TryAddUser(string login, string password)
+    public void AddUser(string login, string password)
     {
         if (IsClientWithSuchLoginExist(login))
         {
-            return false;
+            throw new ClientAlreadyExistException(login);
         }
 
         LoginsAndPasswords.Add(login, password);
-        return true;
     }
 
-    public bool IsClientsPasswordCorrect(string login, string password) //TODO: make Try
+    public bool IsClientsPasswordCorrect(string login, string password)
     {
         return IsClientWithSuchLoginExist(login) && LoginsAndPasswords[login] == password;
     }

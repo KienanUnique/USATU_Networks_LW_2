@@ -158,40 +158,54 @@ namespace ChatLibrary
 
         private void ProcessUserLogIn(PocketTCP receivedPocket)
         {
-            bool isLogInSuccess = _clientsDataBaseWithFileStorage.IsClientsPasswordCorrect(receivedPocket.SenderNick,
-                receivedPocket.Message);
-            if (isLogInSuccess)
+            var loggingInUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
+            AnswerOnAuthenticationTypes logInResult;
+            if (_loggedInClientsIpList.Exists(client => client.Nick == loggingInUser.Nick))
             {
-                var loggedInUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
-                _loggedInClientsIpList.Add(loggedInUser);
-                SendClientAuthorizeToAnotherClients(loggedInUser);
-                ClientAuthorize?.Invoke(new UserEventArgs(loggedInUser.IpPort, loggedInUser.Nick));
+                logInResult = AnswerOnAuthenticationTypes.SessionForThisUserAlreadyExist;
+            }
+            else if (!_clientsDataBaseWithFileStorage.IsClientsPasswordCorrect(receivedPocket.SenderNick,
+                         receivedPocket.Message))
+            {
+                logInResult = AnswerOnAuthenticationTypes.IncorrectLoginInformation;
+            }
+            else
+            {
+                logInResult = AnswerOnAuthenticationTypes.Ok;
+                _loggedInClientsIpList.Add(loggingInUser);
+                SendClientAuthorizeToAnotherClients(loggingInUser);
+                ClientAuthorize?.Invoke(new UserEventArgs(loggingInUser.IpPort, loggingInUser.Nick));
             }
 
             SendPocket(receivedPocket.SenderIpPort,
-                PrepareAnswerOnAuthenticationRequest(isLogInSuccess));
+                PrepareAnswerOnAuthenticationRequest(logInResult));
         }
 
         private void ProcessUserSignUp(PocketTCP receivedPocket)
         {
-            bool addResult =
-                _clientsDataBaseWithFileStorage.TryAddUser(receivedPocket.SenderNick, receivedPocket.Message);
-            if (addResult)
+            var signingUpUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
+            AnswerOnAuthenticationTypes addResult;
+            if (_clientsDataBaseWithFileStorage.IsClientWithSuchLoginExist(signingUpUser.Nick))
             {
-                var signedUpUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
-                _loggedInClientsIpList.Add(signedUpUser);
-                SendClientAuthorizeToAnotherClients(signedUpUser);
-                ClientAuthorize?.Invoke(new UserEventArgs(signedUpUser.IpPort, signedUpUser.Nick));
+                addResult = AnswerOnAuthenticationTypes.UserWithSuchNickAlreadyExist;
+            }
+            else
+            {
+                addResult = AnswerOnAuthenticationTypes.Ok;
+                _clientsDataBaseWithFileStorage.AddUser(receivedPocket.SenderNick, receivedPocket.Message);
+                _loggedInClientsIpList.Add(signingUpUser);
+                SendClientAuthorizeToAnotherClients(signingUpUser);
+                ClientAuthorize?.Invoke(new UserEventArgs(signingUpUser.IpPort, signingUpUser.Nick));
             }
 
             SendPocket(receivedPocket.SenderIpPort,
                 PrepareAnswerOnAuthenticationRequest(addResult));
         }
 
-        private PocketTCP PrepareAnswerOnAuthenticationRequest(bool isOk)
+        private PocketTCP PrepareAnswerOnAuthenticationRequest(AnswerOnAuthenticationTypes authenticationAnswer)
         {
             return new PocketTCP(_thisSenderInfo.Nick, _thisSenderInfo.IpPort, RequestsTypes.AnswerOnAuthentication,
-                (isOk ? AnswerOnAuthenticationTypes.Ok : AnswerOnAuthenticationTypes.NotOk).ToString());
+                authenticationAnswer.ToString());
         }
 
         private void ProcessUserDisconnection(PocketTCP disconnectedUserInfo)

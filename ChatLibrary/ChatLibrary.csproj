@@ -76,6 +76,7 @@
         <Compile Include="NetworkTools.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="PocketTCP.cs" />
+        <Compile Include="SuperSimpleTcp\AuthenticationErrorEventArgs.cs" />
         <Compile Include="SuperSimpleTcp\UserEventArgs.cs" />
         <Compile Include="SuperSimpleTcp\ClientMetadata.cs" />
         <Compile Include="SuperSimpleTcp\Common.cs" />

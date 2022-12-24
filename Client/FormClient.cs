@@ -45,10 +45,12 @@ namespace Client
             Log($"*** Server {e.IpPort} connected", LogsColors.SystemConnected);
         }
 
-        private void OnAuthenticationError(ConnectionEventArgs e)
+        private void OnAuthenticationError(AuthenticationErrorEventArgs e)
         {
             _isAuthorized = false;
-            Log($"*** Server {e.IpPort} rejected authentication", LogsColors.SystemConnected);
+            Log(
+                $"*** Server {e.IpPort} rejected authentication: {Enum.GetName(typeof(AnswerOnAuthenticationTypes), e.AuthenticationError)}",
+                LogsColors.SystemConnected);
         }
 
         private void OnDisconnected(ConnectionEventArgs e)

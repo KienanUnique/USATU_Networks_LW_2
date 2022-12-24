@@ -15,7 +15,9 @@ public enum RequestsTypes
 public enum AnswerOnAuthenticationTypes // TODO: Add different auth answers
 {
     Ok,
-    NotOk
+    UserWithSuchNickAlreadyExist,
+    SessionForThisUserAlreadyExist,
+    IncorrectLoginInformation
 }
 
 public class SenderInfo
