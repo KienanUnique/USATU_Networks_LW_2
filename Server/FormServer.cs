@@ -15,7 +15,7 @@ namespace Server
 
         private const string ButtonStartText = "Start";
         private const string ButtonStopText = "Stop";
-        private const bool NeedLogs = true;
+        private const bool NeedLogs = false;
 
         public FormServer()
         {
@@ -117,6 +117,13 @@ namespace Server
         private void buttonSendMessage_MouseClick(object sender, MouseEventArgs e)
         {
             SendMessageAndEmptyTextBoxMessage();
+        }
+
+        private void FormServer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!_isStarted) return;
+            _server.StopServer();
+            _isStarted = false;
         }
     }
 }

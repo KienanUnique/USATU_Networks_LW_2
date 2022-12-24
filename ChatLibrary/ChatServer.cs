@@ -55,6 +55,7 @@ namespace ChatLibrary
 
             _simpleTcpServer.Events.ClientDisconnected -= OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
+            _clientsDataBaseWithFileStorage.WriteClientsData();
         }
 
         private void SendPocket(string ipPort, PocketTCP pocketTcp)
@@ -174,7 +175,7 @@ namespace ChatLibrary
         {
             var signingUpUser = new SenderInfo(receivedPocket.SenderNick, receivedPocket.SenderIpPort);
             AnswerOnAuthenticationTypes addResult;
-            if (_clientsDataBaseWithFileStorage.IsClientWithSuchLoginExist(signingUpUser.Nick))
+            if (_clientsDataBaseWithFileStorage.IsClientWithSuchNickExist(signingUpUser.Nick))
             {
                 addResult = AnswerOnAuthenticationTypes.UserWithSuchNickAlreadyExist;
             }

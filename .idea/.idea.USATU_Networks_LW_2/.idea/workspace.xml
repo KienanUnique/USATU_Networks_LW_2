@@ -6,17 +6,13 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Add optional logs and remove server connect message">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Add server unreachable error handling and refactor FormClient.cs">
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/FormClient.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/FormClient.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/FormClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/FormServer.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/FormServer.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/FormServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/FormServer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +125,7 @@
       <workItem from="1671112627793" duration="3217000" />
       <workItem from="1671519589274" duration="742000" />
       <workItem from="1671701399332" duration="6425000" />
-      <workItem from="1671722160388" duration="23371000" />
+      <workItem from="1671722160388" duration="24028000" />
     </task>
     <task id="LOCAL-00001" summary="Add first version of lw">
       <created>1668223044960</created>
@@ -208,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671861155215</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Add server unreachable error handling and refactor FormClient.cs">
+      <created>1671863394867</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1671863394867</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +243,7 @@
     <MESSAGE value="Add first raw realization of authentication" />
     <MESSAGE value="Add various reasons for failed authorization and make the session unique for each user" />
     <MESSAGE value="Add optional logs and remove server connect message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add optional logs and remove server connect message" />
+    <MESSAGE value="Add server unreachable error handling and refactor FormClient.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add server unreachable error handling and refactor FormClient.cs" />
   </component>
 </project>

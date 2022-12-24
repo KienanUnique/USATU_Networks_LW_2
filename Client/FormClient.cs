@@ -12,7 +12,7 @@ namespace Client
     {
         private readonly ChatClient _client = new();
         private bool _isAuthorized = false;
-        private const bool NeedLogs = true;
+        private const bool NeedLogs = false;
 
         public FormClient()
         {
@@ -170,6 +170,13 @@ namespace Client
             _client.Disconnect();
             UnsubscribeClientChatEvents();
             SwitchToConnectionInterface();
+            _isAuthorized = false;
+        }
+
+        private void FormClient_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!_isAuthorized) return;
+            _client.Disconnect();
             _isAuthorized = false;
         }
     }

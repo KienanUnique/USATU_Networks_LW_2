@@ -169,6 +169,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormServer";
             this.Text = "Server";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormServer_FormClosed);
             this.panelConnection.ResumeLayout(false);
             this.panelConnection.PerformLayout();
             this.panelChat.ResumeLayout(false);

@@ -7,40 +7,40 @@ namespace ChatLibrary;
 
 public class ClientAlreadyExistException : Exception
 {
-    public ClientAlreadyExistException(string login) : base($"Client with this login already exists: {login}")
+    public ClientAlreadyExistException(string nick) : base($"Client with this nick already exists: {nick}")
     {
     }
 }
 
 public class ClientDoesntExistException : Exception
 {
-    public ClientDoesntExistException(string login) : base($"Client with this login doesn't exists: {login}")
+    public ClientDoesntExistException(string nick) : base($"Client with this nick doesn't exists: {nick}")
     {
     }
 }
 
 public class ClientsDataBase
 {
-    protected Dictionary<string, string> LoginsAndPasswords = new();
+    protected Dictionary<string, string> NicksAndPasswords = new();
 
-    public bool IsClientWithSuchLoginExist(string login)
+    public bool IsClientWithSuchNickExist(string nick)
     {
-        return LoginsAndPasswords.ContainsKey(login);
+        return NicksAndPasswords.ContainsKey(nick);
     }
 
-    public void AddUser(string login, string password)
+    public void AddUser(string nick, string password)
     {
-        if (IsClientWithSuchLoginExist(login))
+        if (IsClientWithSuchNickExist(nick))
         {
-            throw new ClientAlreadyExistException(login);
+            throw new ClientAlreadyExistException(nick);
         }
 
-        LoginsAndPasswords.Add(login, password);
+        NicksAndPasswords.Add(nick, password);
     }
 
-    public bool IsClientsPasswordCorrect(string login, string password)
+    public bool IsClientsPasswordCorrect(string nick, string password)
     {
-        return IsClientWithSuchLoginExist(login) && LoginsAndPasswords[login] == password;
+        return IsClientWithSuchNickExist(nick) && NicksAndPasswords[nick] == password;
     }
 }
 
@@ -52,12 +52,12 @@ public class ClientsDataBaseWithFileStorage : ClientsDataBase
     {
         if (!File.Exists(FileName)) return;
         var readText = File.ReadAllText(FileName);
-        LoginsAndPasswords = JsonSerializer.Deserialize<Dictionary<string, string>>(readText);
+        NicksAndPasswords = JsonSerializer.Deserialize<Dictionary<string, string>>(readText);
     }
 
     public void WriteClientsData()
     {
-        var threeNumbersString = JsonSerializer.Serialize(LoginsAndPasswords) + Environment.NewLine;
+        var threeNumbersString = JsonSerializer.Serialize(NicksAndPasswords) + Environment.NewLine;
         File.WriteAllText(FileName, threeNumbersString);
     }
 }

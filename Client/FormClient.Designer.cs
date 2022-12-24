@@ -214,6 +214,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormClient";
             this.Text = "Client";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormClient_FormClosed);
             this.panelChat.ResumeLayout(false);
             this.panelChat.PerformLayout();
             this.panelConnection.ResumeLayout(false);
