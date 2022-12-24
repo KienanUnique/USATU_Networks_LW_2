@@ -12,10 +12,6 @@ namespace ChatLibrary
 
         public event LogHandler LogThis;
 
-        public delegate void ClientConnectedHandler(ConnectionEventArgs e);
-
-        public event ClientConnectedHandler ClientConnected;
-
         public delegate void ClientAuthorizedHandler(UserEventArgs e);
 
         public event ClientAuthorizedHandler ClientAuthorize;
@@ -38,7 +34,6 @@ namespace ChatLibrary
             _thisSenderInfo = new SenderInfo(nick, ipPort);
             _simpleTcpServer = new SimpleTcpServer(ipPort);
 
-            _simpleTcpServer.Events.ClientConnected += OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected += OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived += OnDataFromClientReceived;
 
@@ -58,7 +53,6 @@ namespace ChatLibrary
                 _simpleTcpServer.DisconnectClient(client.IpPort);
             }
 
-            _simpleTcpServer.Events.ClientConnected -= OnClientConnected;
             _simpleTcpServer.Events.ClientDisconnected -= OnClientDisconnected;
             _simpleTcpServer.Events.DataReceived -= OnDataFromClientReceived;
         }
@@ -131,11 +125,6 @@ namespace ChatLibrary
                     ProcessUserMessage(receivedPocket);
                     break;
             }
-        }
-
-        private void OnClientConnected(object sender, ConnectionEventArgs e)
-        {
-            ClientConnected?.Invoke(e);
         }
 
         private void OnClientDisconnected(object sender, ConnectionEventArgs e)

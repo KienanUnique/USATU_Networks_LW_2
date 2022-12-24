@@ -12,6 +12,7 @@ namespace Client
     {
         private ChatClient _client;
         private bool _isAuthorized = false;
+        private const bool NeedLogs = true;
 
         public FormClient()
         {
@@ -133,7 +134,11 @@ namespace Client
                 textBoxNick.Text == string.Empty || textBoxPassword.Text == string.Empty) return;
             _client = new ChatClient(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text, textBoxPassword.Text,
                 needSignUp);
-            _client.LogThis += OnLog;
+            if (NeedLogs)
+            {
+                _client.LogThis += OnLog;
+            }
+
             _client.ReadyToUse += OnReadyToUse;
             _client.AuthenticationError += OnAuthenticationError;
             _client.Connect();

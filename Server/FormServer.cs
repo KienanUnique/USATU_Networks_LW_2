@@ -15,6 +15,7 @@ namespace Server
 
         private const string ButtonStartText = "Start";
         private const string ButtonStopText = "Stop";
+        private const bool NeedLogs = true;
 
         public FormServer()
         {
@@ -36,11 +37,6 @@ namespace Server
         private void OnLog(string logMessage)
         {
             Log(logMessage, Color.Black);
-        }
-
-        private void OnClientConnected(ConnectionEventArgs e)
-        {
-            Log($"[{e.IpPort}] client connected", LogsColors.SystemConnected);
         }
 
         private void OnClientDisconnected(UserEventArgs e)
@@ -78,8 +74,11 @@ namespace Server
                 textBoxNick.Text != string.Empty)
             {
                 _server = new ChatServer(textBoxIP.Text + ":" + textBoxPort.Text, textBoxNick.Text);
-                _server.LogThis += OnLog;
-                _server.ClientConnected += OnClientConnected;
+                if (NeedLogs)
+                {
+                    _server.LogThis += OnLog;
+                }
+
                 _server.ClientDisconnected += OnClientDisconnected;
                 _server.MessageReceived += OnMessageReceived;
                 _server.ClientAuthorize += OnClientAuthorize;
@@ -92,8 +91,11 @@ namespace Server
             else if (_isStarted)
             {
                 _server.StopServer();
-                _server.LogThis -= OnLog;
-                _server.ClientConnected -= OnClientConnected;
+                if (NeedLogs)
+                {
+                    _server.LogThis -= OnLog;
+                }
+
                 _server.ClientDisconnected -= OnClientDisconnected;
                 _server.MessageReceived -= OnMessageReceived;
                 _server.ClientAuthorize -= OnClientAuthorize;

@@ -6,23 +6,11 @@
     <projectFile>USATU_Networks_LW_2_Client/USATU_Networks_LW_2_Client.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Add first raw realization of authentication">
-      <change afterPath="$PROJECT_DIR$/ChatLibrary/SuperSimpleTcp/AuthenticationErrorEventArgs.cs" afterDir="false" />
+    <list default="true" id="34d59346-d015-4f8d-8090-2182458a5373" name="Changes" comment="Add various reasons for failed authorization and make the session unique for each user">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.USATU_Networks_LW_2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatLibrary.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/ClientsDataBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/PocketTCP.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/PocketTCP.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/bin/Debug/ChatLibrary.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ChatLibrary/obj/Debug/ChatLibrary.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/FormClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/FormClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/FormServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/FormServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +123,7 @@
       <workItem from="1671112627793" duration="3217000" />
       <workItem from="1671519589274" duration="742000" />
       <workItem from="1671701399332" duration="6425000" />
-      <workItem from="1671722160388" duration="20389000" />
+      <workItem from="1671722160388" duration="21325000" />
     </task>
     <task id="LOCAL-00001" summary="Add first version of lw">
       <created>1668223044960</created>
@@ -200,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671844867695</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add various reasons for failed authorization and make the session unique for each user">
+      <created>1671860263266</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1671860263266</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +225,7 @@
     <MESSAGE value="Add nicks to disconnection message" />
     <MESSAGE value="Add first version of clients data base" />
     <MESSAGE value="Add first raw realization of authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add first raw realization of authentication" />
+    <MESSAGE value="Add various reasons for failed authorization and make the session unique for each user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add various reasons for failed authorization and make the session unique for each user" />
   </component>
 </project>
